@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mortgage Calculator | Lloyds Banking Group</title>
+
+  <style>
+    /* ===== Global Reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e9f5ec 0%, #c1e3d3 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 1.5rem 0;
+      background: #004b28;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 95%;
+      max-width: 800px;
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 75, 40, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(0, 75, 40, 0.25);
+    }
+
+    h2 {
+      text-align: center;
+      color: #004b28;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid #cce0d3;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: 0.3s ease;
+      background-color: #f8faf9;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #004b28;
+      outline: none;
+      background-color: #fff;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #004b28;
+    }
+
+    .slider-value {
+      text-align: right;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #004b28 0%, #007a4a 100%);
+      color: #fff;
+      padding: 0.9rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(90deg, #007a4a 0%, #009d5e 100%);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #bbb;
+    }
+
+    .results {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f4fdf8;
+      border-left: 6px solid #004b28;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .results h3 {
+      color: #004b28;
+      margin-bottom: 1rem;
+    }
+
+    .results p {
+      font-size: 1.1rem;
+      margin: 0.6rem 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Mortgage Calculator</h1>
+  </header>
+
+  <div class="container">
+    <h2>Plan Your Mortgage with Confidence</h2>
+
+    <div class="form-group">
+      <label for="loanAmount">Loan Amount (£)</label>
+      <input type="number" id="loanAmount" placeholder="Enter loan amount" min="0" />
+    </div>
+
+    <div class="form-group">
+      <label for="interestRate">Interest Rate (%)</label>
+      <input type="range" id="interestRate" min="0" max="15" step="0.1" value="6.5"
+        oninput="document.getElementById('rateDisplay').textContent=this.value" />
+      <div class="slider-value">Current Rate: <span id="rateDisplay">6.5</span>%</div>
+    </div>
+
+    <div class="form-group">
+      <label for="loanTerm">Loan Term (Years)</label>
+      <select id="loanTerm">
+        <option value="10">10 Years</option>
+        <option value="15">15 Years</option>
+        <option value="20">20 Years</option>
+        <option value="25">25 Years</option>
+        <option value="30">30 Years</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="mortgageType">Mortgage Type</label>
+      <select id="mortgageType">
+        <option value="fixed">Fixed Rate</option>
+        <option value="variable">Variable Rate</option>
+      </select>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; gap: 10px;">
+      <button class="btn" onclick="calculateMortgage()">Calculate</button>
+      <button class="btn btn-secondary" onclick="resetForm()">Reset</button>
+    </div>
+
+    <div class="results" id="results">
+      <h3>Results Summary</h3>
+      <p><span>Monthly Payment:</span> <strong id="monthlyPayment">£0.00</strong></p>
+      <p><span>Total Payment:</span> <strong id="totalPayment">£0.00</strong></p>
+      <p><span>Total Interest:</span> <strong id="totalInterest">£0.00</strong></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Lloyds Banking Group | Developed by Project Team
+  </footer>
+
+  <script>
+    function calculateMortgage() {
+      const principal = parseFloat(document.getElementById('loanAmount').value);
+      const annualRate = parseFloat(document.getElementById('interestRate').value);
+      const years = parseInt(document.getElementById('loanTerm').value);
+
+      if (isNaN(principal) || principal <= 0) {
+        alert('Please enter a valid loan amount.');
+        return;
+      }
+
+      const monthlyRate = annualRate / 100 / 12;
+      const months = years * 12;
+
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+                  (Math.pow(1 + monthlyRate, months) - 1);
+
+      if (!isFinite(emi)) {
+        alert('Invalid input values. Please check again.');
+        return;
+      }
+
+      const totalPayment = emi * months;
+      const totalInterest = totalPayment - principal;
+
+      document.getElementById('monthlyPayment').textContent = `£${emi.toFixed(2)}`;
+      document.getElementById('totalPayment').textContent = `£${totalPayment.toFixed(2)}`;
+      document.getElementById('totalInterest').textContent = `£${totalInterest.toFixed(2)}`;
+    }
+
+    function resetForm() {
+      document.getElementById('loanAmount').value = '';
+      document.getElementById('interestRate').value = 6.5;
+      document.getElementById('rateDisplay').textContent = 6.5;
+      document.getElementById('loanTerm').value = 20;
+      document.getElementById('mortgageType').value = 'fixed';
+      document.getElementById('monthlyPayment').textContent = '£0.00';
+      document.getElementById('totalPayment').textContent = '£0.00';
+      document.getElementById('totalInterest').textContent = '£0.00';
+    }
+  </script>
+</body>
+</html>
