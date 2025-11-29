@@ -1,4 +1,5 @@
 # Mortgage Calculator
+<img width="1921" height="1386" alt="image" src="https://github.com/user-attachments/assets/d58b57c4-2c5d-4c50-aa14-666a56e72b3d" />
 
 A responsive and user-friendly **Mortgage Calculator** built with **HTML, CSS, and JavaScript**, designed to help users estimate monthly mortgage payments accurately and intuitively. This project was developed as part of the **Lloyds Banking Group Digital Redesign Challenge**, focusing on delivering a clean UI, accurate financial logic, and robust usability testing.
 
@@ -131,4 +132,5 @@ GitHub: [MrCoss](https://github.com/MrCoss)
 ## License
 
 This project is licensed under the **MIT License** — free to use, modify, and distribute with attribution.
+
 
